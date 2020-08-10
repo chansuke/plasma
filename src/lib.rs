@@ -14,12 +14,14 @@ struct Plasma {
 
 struct PlasmaParameters {
     volume: vst::util::AtomicFloat,
+    time: vst::util::AtomicFloat,
 }
 
 impl Default for PlasmaParameters {
     fn default() -> Self {
         Self {
             volume: vst::util::AtomicFloat::new(1.0),
+            time: vst::util::AtomicFloat::new(1.0),
         }
     }
 }
@@ -28,6 +30,7 @@ impl PluginParameters for PlasmaParameters {
     fn get_parameter_label(&self, index: i32) -> String {
         match index {
             0 => "x".to_string(),
+            1 => "y".to_string(),
             _ => "".to_string(),
         }
     }
@@ -35,6 +38,7 @@ impl PluginParameters for PlasmaParameters {
     fn get_parameter_text(&self, index: i32) -> String {
         match index {
             0 => format!("{:.3}", self.volume.get()),
+            1 => format!("{:.3}", self.time.get()),
             _ => format!(""),
         }
     }
@@ -42,6 +46,7 @@ impl PluginParameters for PlasmaParameters {
     fn get_parameter_name(&self, index: i32) -> String {
         match index {
             0 => "volume".to_string(),
+            1 => "time".to_string(),
             _ => "".to_string(),
         }
     }
@@ -49,12 +54,14 @@ impl PluginParameters for PlasmaParameters {
     fn get_parameter(&self, index: i32) -> f32 {
         match index {
             0 => self.volume.get(),
+            1 => self.time.get(),
             _ => 0.0,
         }
     }
     fn set_parameter(&self, index: i32, value: f32) {
         match index {
             0 => self.volume.set(value),
+            1 => self.time.set(value),
             _ => (),
         }
     }
